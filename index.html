@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Ebook Store</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <style>
+    .book-card { cursor: pointer; transition: transform .2s; }
+    .book-card:hover { transform: scale(1.05);}
+  </style>
+</head>
+<body>
+  <div class="container my-4">
+    <h1 class="mb-4">My Ebook Store</h1>
+    <div class="row" id="books-list"></div>
+  </div>
+  <script>
+    fetch('books.json').then(r => r.json()).then(books => {
+      let html = '';
+      books.forEach((book, idx) => {
+        html += `
+        <div class="col-md-3 mb-4">
+          <div class="card book-card" onclick="window.location='book.html?idx=${idx}'">
+            <img src="${book.cover}" class="card-img-top" style="height:300px;object-fit:cover">
+            <div class="card-body">
+              <h5 class="card-title">${book.title}</h5>
+              <p class="card-text"><span class="badge bg-info">${book.category}</span></p>
+            </div>
+          </div>
+        </div>`;
+      });
+      document.getElementById('books-list').innerHTML = html;
+    });
+  </script>
+</body>
+</html>
